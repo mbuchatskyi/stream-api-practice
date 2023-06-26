@@ -167,7 +167,6 @@ public class Main {
 	private static List<Order> sortOrdersByUserAgeDesc(List<Order> orders) {
 		return orders.stream()
 				.sorted((o1, o2) -> -Integer.compare(o1.getUser().getAge(), o2.getUser().getAge()))
-				.distinct()
 				.collect(Collectors.toList());
 	}
 
