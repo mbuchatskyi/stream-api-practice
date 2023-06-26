@@ -11,4 +11,13 @@ public class VirtualProduct extends Product{
 		this.code = code;
 		this.expirationDate = expirationDate;
 	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public LocalDate getExpirationDate() {
+		return expirationDate;
+	}
 }
+

@@ -17,4 +17,10 @@ public class RealProduct extends Product {
 	public int getWeight() {
 		return weight;
 	}
+
+	@Override
+	public String toString() {
+		return "Product [name = " + this.getName() + ", price = " + this.getPrice() + ", weight = " + weight + "].";
+	}
 }
+

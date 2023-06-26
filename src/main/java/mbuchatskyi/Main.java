@@ -14,7 +14,7 @@ import mbuchatskyi.order.Order;
 
 public class Main {
 	public static void main(String[] args) {
-
+	
 		// TODO Create User class with method createUser
 		// User class fields: name, age;
 		// Notice that we can only create user with createUser method without using
@@ -24,12 +24,6 @@ public class Main {
 		User user3 = User.createUser("Charlie", 20);
 		User user4 = User.createUser("John", 27);
 
-		// TODO Create factory that can create a product for a specific type: Real or
-		// Virtual
-		// Product class fields: name, price
-		// Product Real class additional fields: size, weight
-		// Product Virtual class additional fields: code, expiration date
-
 		Product realProduct1 = ProductFactory.createRealProduct("Product A", 20.50, 10, 25);
 		Product realProduct2 = ProductFactory.createRealProduct("Product B", 50, 6, 17);
 
@@ -38,10 +32,6 @@ public class Main {
 		Product virtualProduct2 = ProductFactory.createVirtualProduct("Product D", 81.25, "yyy",
 				LocalDate.of(2024, 6, 20));
 
-		// TODO Create Order class with method createOrder
-		// Order class fields: User, List<Price>
-		// Notice that we can only create order with createOrder method without using
-		// constructor or builder
 		List<Order> orders = new ArrayList<>() {
 			{
 				add(Order.createOrder(user1, List.of(realProduct1, virtualProduct1, virtualProduct2)));
@@ -61,15 +51,20 @@ public class Main {
 		System.out.println("1. Create singleton class VirtualProductCodeManager \n");
 		VirtualProductCodeManager virtualProductCodeManager = VirtualProductCodeManager.getInstance();
 
+		virtualProductCodeManager.useCode("xxx");
+		
 		virtualProductCodeManager.useCode("xxxyyy");
 
-		virtualProductCodeManager.useCode(new String("xxx"));
+		virtualProductCodeManager.useCode("yy");
 
 		boolean isCodeUsed = virtualProductCodeManager.isCodeUsed("xxx");
 		System.out.println("Is code 'xxx' used: " + isCodeUsed + "\n");
 
 		isCodeUsed = virtualProductCodeManager.isCodeUsed("yyy");
 		System.out.println("Is code 'yyy' used: " + isCodeUsed + "\n");
+		
+		isCodeUsed = virtualProductCodeManager.isCodeUsed("yy");
+		System.out.println("Is code 'yy' used: " + isCodeUsed + "\n");
 
 		// TODO 2). Create a functionality to get the most expensive ordered product
 		Product mostExpensive = getMostExpensiveProduct(orders);
@@ -106,7 +101,7 @@ public class Main {
 		Map<Order, Integer> result = calculateWeightOfEachOrder(orders);
 		System.out.println("7. Calculate the total weight of each order \n");
 		result.forEach((key, value) -> System.out.println("order: " + key + " " +
-		"total weight: " + value + "\n"));
+		"total weight: " + value + "\n")); 
 	}
 
 	private static Product getMostExpensiveProduct(List<Order> orders) {
@@ -172,6 +167,7 @@ public class Main {
 	private static List<Order> sortOrdersByUserAgeDesc(List<Order> orders) {
 		return orders.stream()
 				.sorted((o1, o2) -> -Integer.compare(o1.getUser().getAge(), o2.getUser().getAge()))
+				.distinct()
 				.collect(Collectors.toList());
 	}
 
@@ -184,5 +180,4 @@ public class Main {
 	                				.mapToInt(p -> ((RealProduct) p).getWeight())
 	                				.sum()));
 	}
-
 }
